@@ -274,7 +274,7 @@ Sustituye `{BG_COLOR}` con el color elegido por el usuario.
 
 ```tsx
 import React from "react";
-import { interpolate, staticFile, useCurrentFrame, useVideoConfig, Video } from "remotion";
+import { staticFile, Video } from "remotion";
 
 const CANVAS_W = 1080;
 const CANVAS_H = 1080;
@@ -287,19 +287,8 @@ const BG = "{BG_COLOR}";
 interface Props { videoFile: string }
 
 export const PageVideo: React.FC<Props> = ({ videoFile }) => {
-  const frame = useCurrentFrame();
-  const { durationInFrames, fps } = useVideoConfig();
-  const fadeDuration = Math.round(fps * 0.7);
-
-  const opacity = interpolate(
-    frame,
-    [0, fadeDuration, durationInFrames - fadeDuration, durationInFrames],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-
   return (
-    <div style={{ width: CANVAS_W, height: CANVAS_H, background: BG, opacity, position: "relative" }}>
+    <div style={{ width: CANVAS_W, height: CANVAS_H, background: BG, position: "relative" }}>
       <div style={{
         position: "absolute", top: PAD, left: PAD, width: PANEL_W, height: PANEL_H,
         borderTopLeftRadius: RADIUS, borderTopRightRadius: RADIUS,
@@ -326,7 +315,7 @@ Sustituye `{BG_COLOR}` con el color elegido.
 
 ```tsx
 import React from "react";
-import { interpolate, staticFile, useCurrentFrame, useVideoConfig, Video } from "remotion";
+import { staticFile, Video } from "remotion";
 
 const CANVAS_W = 1080;
 const CANVAS_H = 1080;
@@ -348,22 +337,11 @@ const INDICATOR_H = 5;
 interface Props { videoFile: string }
 
 export const PhoneFrame: React.FC<Props> = ({ videoFile }) => {
-  const frame = useCurrentFrame();
-  const { durationInFrames, fps } = useVideoConfig();
-  const fadeDuration = Math.round(fps * 0.7);
-
-  const opacity = interpolate(
-    frame,
-    [0, fadeDuration, durationInFrames - fadeDuration, durationInFrames],
-    [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-
   const left = (PANEL_W - PHONE_W) / 2;
   const top = (PANEL_H - PHONE_H) / 2;
 
   return (
-    <div style={{ width: CANVAS_W, height: CANVAS_H, background: BG, opacity, position: "relative" }}>
+    <div style={{ width: CANVAS_W, height: CANVAS_H, background: BG, position: "relative" }}>
       <div style={{ position: "absolute", top: PAD, left: PAD, width: PANEL_W, height: PANEL_H }}>
         <div style={{ position: "absolute", left, top, width: PHONE_W, height: PHONE_H }}>
           {/* Cuerpo */}
